@@ -6,161 +6,151 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="CR Chantier">
-<meta name="theme-color" content="#1a1a2e">
-<title>CR Chantier – Boulangé</title>
+<meta name="theme-color" content="#2d4a6b">
+<title>CR Chantier</title>
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js"></script>
 <style>
 :root {
-  --bg: #f4f2ee;
-  --bg2: #eceae4;
-  --card: #ffffff;
-  --text: #1c1c1e;
-  --text2: #6b6b70;
-  --text3: #9a9aa0;
-  --accent: #2d4a6b;
-  --accent2: #4a7fa5;
-  --border: #dddbd5;
-  --green: #2d6a4f;
-  --green-bg: #eaf4ef;
-  --amber: #7a5c00;
-  --amber-bg: #fef8e6;
-  --red: #8b2020;
-  --red-bg: #fdeaea;
-  --radius: 14px;
-  --radius-sm: 9px;
-  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --bg:#f4f2ee; --card:#fff; --text:#1c1c1e; --text2:#6b6b70; --text3:#9a9aa0;
+  --accent:#2d4a6b; --accent2:#4a7fa5; --border:#dddbd5;
+  --green:#2d6a4f; --green-bg:#eaf4ef; --amber:#7a5c00; --amber-bg:#fef8e6;
+  --red:#8b2020; --red-bg:#fdeaea; --radius:14px; --radius-sm:9px;
+  --shadow:0 2px 12px rgba(0,0,0,0.07);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); overscroll-behavior: none; }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overscroll-behavior:none}
 
-/* ── MOBILE LAYOUT (default) ── */
-#app { display: flex; flex-direction: column; height: 100%; max-width: 480px; margin: 0 auto; }
-#topbar { background: var(--accent); color: #fff; padding: 14px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-#topbar h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.01em; }
-#topbar .sub { font-size: 12px; opacity: 0.7; font-family: 'DM Mono', monospace; }
-#tab-bar { background: var(--card); border-bottom: 1px solid var(--border); display: flex; flex-shrink: 0; }
-.tab { flex: 1; padding: 11px 4px; text-align: center; font-size: 12px; font-weight: 500; color: var(--text2); border-bottom: 2.5px solid transparent; cursor: pointer; transition: all 0.15s; }
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-#content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 14px 100px; }
-#bottom-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--card); border-top: 1px solid var(--border); padding: 10px 14px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); display: flex; gap: 10px; z-index: 100; }
+/* ── LAYOUT MOBILE ── */
+#app{display:flex;flex-direction:column;height:100%;max-width:480px;margin:0 auto}
+#topbar{background:var(--accent);color:#fff;padding:14px 18px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:10px}
+#topbar-left{flex:1;min-width:0}
+#topbar h1{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#topbar .sub{font-size:11px;opacity:.7;font-family:'DM Mono',monospace}
+#topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.chantier-btn{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;border-radius:8px;padding:5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
+#tab-bar{background:var(--card);border-bottom:1px solid var(--border);display:flex;flex-shrink:0}
+.tab{flex:1;padding:11px 4px;text-align:center;font-size:12px;font-weight:500;color:var(--text2);border-bottom:2.5px solid transparent;cursor:pointer;transition:all .15s}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px 100px}
+#bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--card);border-top:1px solid var(--border);padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;z-index:100}
 
-/* ── TABLET / iPad (≥768px) ── */
-@media (min-width: 768px) {
-  html, body { overflow: hidden; }
-  #app { max-width: 100%; flex-direction: column; height: 100vh; }
-  #topbar { padding: 16px 28px; }
-  #topbar h1 { font-size: 18px; }
-  #topbar .sub { font-size: 13px; }
-  #tab-bar { padding: 0 20px; }
-  .tab { font-size: 13px; padding: 13px 16px; flex: none; }
-  #main-split { display: flex; flex: 1; overflow: hidden; }
-  #sidebar { width: 260px; min-width: 220px; background: var(--card); border-right: 1px solid var(--border); overflow-y: auto; padding: 16px 14px 20px; flex-shrink: 0; }
-  #content { flex: 1; overflow-y: auto; padding: 20px 24px 100px; }
-  #bottom-bar { position: sticky; bottom: 0; left: 0; transform: none; max-width: 100%; width: 100%; padding: 12px 24px; padding-bottom: 12px; }
+/* ── TABLET/iPad ── */
+@media(min-width:768px){
+  html,body{overflow:hidden}
+  #app{max-width:100%;height:100vh}
+  #topbar{padding:16px 28px}
+  #topbar h1{font-size:18px}
+  #tab-bar{padding:0 20px}
+  .tab{font-size:13px;padding:13px 16px;flex:none}
+  #main-split{display:flex;flex:1;overflow:hidden}
+  #sidebar{width:260px;min-width:220px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;padding:16px 14px 20px;flex-shrink:0}
+  #content{flex:1;overflow-y:auto;padding:20px 24px 100px}
+  #bottom-bar{position:sticky;bottom:0;left:0;transform:none;max-width:100%;width:100%;padding:12px 24px}
+}
+@media(min-width:1100px){
+  #sidebar{width:300px}
+  #content{max-width:780px}
+  #topbar{padding:16px 36px}
+  #bottom-bar{padding:14px 36px}
 }
 
-/* ── DESKTOP / Mac (≥1100px) ── */
-@media (min-width: 1100px) {
-  #sidebar { width: 300px; }
-  #content { max-width: 780px; }
-  #topbar { padding: 16px 36px; }
-  #bottom-bar { padding: 14px 36px; }
-}
+/* ── COMPOSANTS ── */
+.card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:14px 14px 12px;margin-bottom:12px;box-shadow:var(--shadow)}
+.card-title{font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.card-subtitle{font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:10px;margin-top:-6px}
+label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;font-weight:500}
+input[type=text],input[type=date],textarea,select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
+input:focus,textarea:focus,select:focus{border-color:var(--accent2);background:#fff}
+textarea{resize:none;min-height:90px;line-height:1.5}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.form-full{margin-bottom:12px}
+.presence-row{display:flex;gap:7px;margin-bottom:10px}
+.pres-btn{flex:1;padding:7px 4px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;text-align:center;transition:all .15s}
+.pres-btn.P{background:var(--green-bg);color:var(--green);border-color:#a8d5be}
+.pres-btn.E{background:var(--amber-bg);color:var(--amber);border-color:#f5d87a}
+.pres-btn.A{background:var(--red-bg);color:var(--red);border-color:#f0a8a8}
+.note-wrap{position:relative}
+.note-wrap textarea{padding-right:44px}
+.mic-btn{position:absolute;right:8px;bottom:8px;width:32px;height:32px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.mic-hint{font-size:11px;color:var(--text3);margin-top:4px}
+.btn{flex:1;padding:12px;border-radius:var(--radius-sm);border:none;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s}
+.btn-outline{background:var(--bg);border:1px solid var(--border);color:var(--text2)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn:active{transform:scale(.97)}
+.intervenant-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)}
+.intervenant-row:last-child{border-bottom:none}
+.int-info{flex:1}
+.int-lot{font-size:12px;font-weight:600;color:var(--accent)}
+.int-name{font-size:13px;color:var(--text)}
+.int-co{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
+.edit-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);font-size:12px;color:var(--text2);cursor:pointer}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--card);border-radius:var(--radius) var(--radius) 0 0;padding:20px 16px;padding-bottom:calc(20px + env(safe-area-inset-bottom));width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+.modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
+.modal-btns{display:flex;gap:10px;margin-top:14px}
+#toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--accent);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;z-index:300;white-space:nowrap;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.convoc-check{display:flex;align-items:center;gap:7px;margin-top:6px}
+.convoc-check input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);flex-shrink:0}
+.convoc-check label{font-size:12px;color:var(--text2);margin:0}
 
-/* Sidebar lot list */
-.sidebar-section { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin: 16px 0 8px; }
-.sidebar-lot { padding: 9px 10px; border-radius: var(--radius-sm); cursor: pointer; border: 1px solid transparent; margin-bottom: 4px; transition: all 0.12s; }
-.sidebar-lot:hover { background: var(--bg); }
-.sidebar-lot.active { background: #e8eef5; border-color: #b8cfe0; }
-.sidebar-lot-label { font-size: 13px; font-weight: 500; color: var(--text); }
-.sidebar-lot-co { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; margin-top: 1px; }
-.sidebar-pres { display: inline-block; padding: 1px 7px; border-radius: 8px; font-size: 11px; font-weight: 500; margin-top: 3px; }
-.sidebar-pres.P { background: var(--green-bg); color: var(--green); }
-.sidebar-pres.E { background: var(--amber-bg); color: var(--amber); }
-.sidebar-pres.A { background: var(--red-bg); color: var(--red); }
-.sidebar-phase-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
-.sidebar-phase-tab { flex: 1; padding: 6px 4px; text-align: center; font-size: 11px; font-weight: 500; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text2); cursor: pointer; transition: all 0.12s; }
-.sidebar-phase-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+/* ── ÉCRAN CHANTIERS ── */
+#screen-chantiers{position:fixed;inset:0;background:var(--bg);z-index:400;display:flex;flex-direction:column}
+.chantiers-header{background:var(--accent);color:#fff;padding:20px 20px 16px}
+.chantiers-header h1{font-size:20px;font-weight:600}
+.chantiers-header p{font-size:13px;opacity:.7;margin-top:3px}
+.chantiers-list{flex:1;overflow-y:auto;padding:16px}
+.chantier-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s}
+.chantier-card:active{transform:scale(.98)}
+.chantier-card-info{flex:1;min-width:0}
+.chantier-card-name{font-size:15px;font-weight:600;color:var(--text)}
+.chantier-card-addr{font-size:12px;color:var(--text3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chantier-card-meta{font-size:11px;color:var(--text2);margin-top:4px;font-family:'DM Mono',monospace}
+.chantier-card-arrow{font-size:20px;color:var(--text3);flex-shrink:0}
+.new-chantier-btn{margin:0 16px 20px;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;width:calc(100% - 32px);text-align:center}
 
-/* CARDS */
-.card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 14px 14px 12px; margin-bottom: 12px; box-shadow: var(--shadow); }
-.card-title { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-.card-subtitle { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; margin-bottom: 10px; margin-top: -6px; }
-
-/* FORM ELEMENTS */
-label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; font-weight: 500; }
-input[type=text], input[type=date], textarea, select {
-  width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
-  padding: 10px 12px; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--text);
-  outline: none; transition: border-color 0.15s; -webkit-appearance: none; appearance: none;
-}
-input:focus, textarea:focus, select:focus { border-color: var(--accent2); background: #fff; }
-textarea { resize: none; min-height: 90px; line-height: 1.5; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.form-full { margin-bottom: 12px; }
-
-/* PRESENCE SELECTOR */
-.presence-row { display: flex; gap: 7px; margin-bottom: 10px; }
-.pres-btn { flex: 1; padding: 7px 4px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); font-size: 12px; font-weight: 500; color: var(--text2); cursor: pointer; text-align: center; transition: all 0.15s; }
-.pres-btn.P { background: var(--green-bg); color: var(--green); border-color: #a8d5be; }
-.pres-btn.E { background: var(--amber-bg); color: var(--amber); border-color: #f5d87a; }
-.pres-btn.A { background: var(--red-bg); color: var(--red); border-color: #f0a8a8; }
-
-/* TEXTAREA WITH MIC */
-.note-wrap { position: relative; }
-.note-wrap textarea { padding-right: 44px; }
-.mic-btn { position: absolute; right: 8px; bottom: 8px; width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--accent); color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; }
-.mic-btn.rec { background: #c0392b; animation: rec-pulse 1s ease-in-out infinite; }
-@keyframes rec-pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
-.mic-hint { font-size: 11px; color: var(--text3); margin-top: 4px; }
-
-/* BUTTONS */
-.btn { flex: 1; padding: 12px; border-radius: var(--radius-sm); border: none; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s; }
-.btn-outline { background: var(--bg); border: 1px solid var(--border); color: var(--text2); }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn:active { transform: scale(0.97); }
-
-/* INTERVENANTS EDITOR */
-.intervenant-row { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--border); }
-.intervenant-row:last-child { border-bottom: none; }
-.int-info { flex: 1; }
-.int-lot { font-size: 12px; font-weight: 600; color: var(--accent); }
-.int-name { font-size: 13px; color: var(--text); }
-.int-co { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; }
-.edit-btn { padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); font-size: 12px; color: var(--text2); cursor: pointer; }
-
-/* MODAL */
-.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: flex; align-items: flex-end; justify-content: center; }
-.modal { background: var(--card); border-radius: var(--radius) var(--radius) 0 0; padding: 20px 16px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; }
-.modal h3 { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
-.modal .form-full { margin-bottom: 10px; }
-.modal-btns { display: flex; gap: 10px; margin-top: 14px; }
-
-/* TOAST */
-#toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--accent); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; pointer-events: none; }
-#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* SECTION HEADER */
-.section-header { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin: 18px 0 8px; }
-
-/* CONVOC BADGE */
-.convoc-check { display: flex; align-items: center; gap: 7px; margin-top: 6px; }
-.convoc-check input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0; }
-.convoc-check label { font-size: 12px; color: var(--text2); margin: 0; }
+/* ── SIDEBAR ── */
+.sidebar-section{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px}
+.sidebar-lot{padding:9px 10px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid transparent;margin-bottom:4px;transition:all .12s}
+.sidebar-lot:hover{background:var(--bg)}
+.sidebar-lot.active{background:#e8eef5;border-color:#b8cfe0}
+.sidebar-lot-label{font-size:13px;font-weight:500;color:var(--text)}
+.sidebar-lot-co{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:1px}
+.sidebar-pres{display:inline-block;padding:1px 7px;border-radius:8px;font-size:11px;font-weight:500;margin-top:3px}
+.sidebar-pres.P{background:var(--green-bg);color:var(--green)}
+.sidebar-pres.E{background:var(--amber-bg);color:var(--amber)}
+.sidebar-pres.A{background:var(--red-bg);color:var(--red)}
+.sidebar-phase-tabs{display:flex;gap:4px;margin-bottom:12px}
+.sidebar-phase-tab{flex:1;padding:6px 4px;text-align:center;font-size:11px;font-weight:500;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text2);cursor:pointer;transition:all .12s}
+.sidebar-phase-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 </style>
 </head>
 <body>
-<div id="app">
+
+<!-- ÉCRAN SÉLECTION CHANTIER -->
+<div id="screen-chantiers">
+  <div class="chantiers-header">
+    <h1>Mes Chantiers</h1>
+    <p>Sélectionnez un chantier pour continuer</p>
+  </div>
+  <div class="chantiers-list" id="chantiers-list"></div>
+  <button class="new-chantier-btn" onclick="newChantier()">+ Nouveau chantier</button>
+</div>
+
+<!-- APP PRINCIPALE -->
+<div id="app" style="display:none">
   <div id="topbar">
-    <div>
+    <div id="topbar-left">
       <div id="topbar-title" class="sub">CR Chantier</div>
-      <h1 id="topbar-mo">Chargement…</h1>
+      <h1 id="topbar-mo">—</h1>
     </div>
-    <div id="topbar-num" style="font-family:'DM Mono',monospace;font-size:22px;font-weight:600;opacity:0.9">—</div>
+    <div id="topbar-right">
+      <div id="topbar-num" style="font-family:'DM Mono',monospace;font-size:20px;font-weight:600;opacity:.9">—</div>
+      <button class="chantier-btn" onclick="showChantiers()">⇄ Chantiers</button>
+    </div>
   </div>
   <div id="tab-bar">
     <div class="tab active" data-tab="saisie" onclick="switchTab('saisie')">Saisie</div>
@@ -172,19 +162,29 @@ textarea { resize: none; min-height: 90px; line-height: 1.5; }
     <div id="sidebar" style="display:none"></div>
     <div id="content"></div>
   </div>
-  <div id="bottom-bar">
-    <button class="btn btn-outline" onclick="resetSaisie()">↺ Nouveau CR</button>
-    <button class="btn btn-primary" onclick="generateDocx()">⬇ Générer .docx</button>
-  </div>
+  <div id="bottom-bar"></div>
 </div>
+
 <div id="toast"></div>
 <div id="modal-bg" class="modal-bg" style="display:none" onclick="closeModal(event)">
   <div class="modal" id="modal-content"></div>
 </div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────────────────────────────
-const DEFAULT_CONFIG = {
+// ─── DONNÉES PAR DÉFAUT ───────────────────────────────────────────────────────
+const DEFAULT_LOTS = [
+  {id:"go",      label:"Gros Œuvre Étendu",     company:"AECTIS",                contact:"M. Michelotti",  tel:"",              mail:"aectis@yahoo.fr"},
+  {id:"elec",    label:"Électricité",            company:"INOLYS",                contact:"M. Halluin",    tel:"07 60 49 11 30", mail:"contact.inolys@gmail.com"},
+  {id:"plomb",   label:"Plomberie",              company:"VERKRUYSSEN",           contact:"M. Verkruyssen",tel:"06 71 89 31 30", mail:"ludovic@verkruyssen.fr"},
+  {id:"vitrerie",label:"Vitrerie",               company:"ATELIER DU VERRE",      contact:"M. Fermont",    tel:"03 20 83 17 25", mail:"contact@ateliercreations.com"},
+  {id:"peinture",label:"Peinture",               company:"DESSAUVAGES & FILS",    contact:"M. Trannin",    tel:"06 88 64 53 97", mail:"atrannin@dessauvagesetfils.fr"},
+  {id:"parquet", label:"Parquet",                company:"INTERIEURS & PARQUETS", contact:"M. Masson",     tel:"03 20 17 17 08", mail:"iepadministratif@free.fr"},
+  {id:"menuext", label:"Menuiserie Extérieure",  company:"ARENORD",               contact:"M. Moerman",    tel:"06 68 22 41 77", mail:"menuiserie@arenord.fr"},
+  {id:"agence",  label:"Agencement",             company:"Ets DESTAILLEUR",       contact:"M. Destailleur",tel:"06 09 63 25 97", mail:"ets.destailleur@online.fr"},
+];
+
+const BOULANGE_CHANTIER = {
+  id: "boulange",
   mo: "M. BOULANGÉ",
   adresse: "78 rue de l'Égalité – 59290 Wasquehal",
   operation: "RÉNOVATION HABITATION",
@@ -192,70 +192,187 @@ const DEFAULT_CONFIG = {
   moe_contact: "M. Perron",
   moe_tel: "06 19 16 46 69",
   moe_mail: "jeanmarc.perron@juvencea.com",
-};
-
-const DEFAULT_LOTS = [
-  { id:"go",        label:"Gros Œuvre Étendu",    company:"AECTIS",               contact:"M. Michelotti", tel:"",             mail:"aectis@yahoo.fr" },
-  { id:"elec",      label:"Électricité",           company:"INOLYS",               contact:"M. Halluin",   tel:"07 60 49 11 30",mail:"contact.inolys@gmail.com" },
-  { id:"plomb",     label:"Plomberie",             company:"VERKRUYSSEN",          contact:"M. Verkruyssen",tel:"06 71 89 31 30",mail:"ludovic@verkruyssen.fr" },
-  { id:"vitrerie",  label:"Vitrerie",              company:"ATELIER DU VERRE",     contact:"M. Fermont",   tel:"03 20 83 17 25",mail:"contact@ateliercreations.com" },
-  { id:"peinture",  label:"Peinture",              company:"DESSAUVAGES & FILS",   contact:"M. Trannin",   tel:"06 88 64 53 97",mail:"atrannin@dessauvagesetfils.fr" },
-  { id:"parquet",   label:"Parquet",               company:"INTERIEURS & PARQUETS",contact:"M. Masson",    tel:"03 20 17 17 08",mail:"iepadministratif@free.fr" },
-  { id:"menuext",   label:"Menuiserie Extérieure", company:"ARENORD",              contact:"M. Moerman",   tel:"06 68 22 41 77",mail:"menuiserie@arenord.fr" },
-  { id:"agencement",label:"Agencement",            company:"Ets DESTAILLEUR",      contact:"M. Destailleur",tel:"06 09 63 25 97",mail:"ets.destailleur@online.fr" },
-];
-
-const DEFAULT_META = {
-  num: "12",
-  date: today(),
-  next: "",
-  phase: "Phase 2 Exécution",
-  chef: "",
-  tech: "",
+  lots: DEFAULT_LOTS.map(l => ({...l})),
+  meta: { num:"12", date: today(), next:"", phase:"Phase 2 Exécution", chef:"", tech:"", code_cles:"2018", note_gen:"" },
+  saisie: {},
+  createdAt: Date.now(),
 };
 
 function today() {
   return new Date().toISOString().split('T')[0];
 }
 
-let cfg = {};
-let lots = [];
-let meta = {};
-let saisie = {}; // { phaseId+lotId: { presence, noteB, noteC, convoc } }
+// ─── ÉTAT GLOBAL ─────────────────────────────────────────────────────────────
+let chantiers = [];     // liste de tous les chantiers
+let currentId = null;  // id du chantier actif
 let currentTab = 'saisie';
 let currentPhase = 'B';
-let recTarget = null;
+let currentLot = null;
+
+// Raccourcis vers le chantier actif
+const C = () => chantiers.find(c => c.id === currentId) || chantiers[0];
+const cfg = () => C();
+const lots = () => C().lots;
+const meta = () => C().meta;
+const saisie = () => C().saisie;
 
 // ─── PERSISTENCE ─────────────────────────────────────────────────────────────
 function save() {
-  localStorage.setItem('cr_cfg', JSON.stringify(cfg));
-  localStorage.setItem('cr_lots', JSON.stringify(lots));
-  localStorage.setItem('cr_meta', JSON.stringify(meta));
-  localStorage.setItem('cr_saisie', JSON.stringify(saisie));
+  localStorage.setItem('cr_chantiers', JSON.stringify(chantiers));
+  localStorage.setItem('cr_current', currentId);
 }
 
 function load() {
-  try { cfg = JSON.parse(localStorage.getItem('cr_cfg')) || {...DEFAULT_CONFIG}; } catch(e) { cfg = {...DEFAULT_CONFIG}; }
-  try { lots = JSON.parse(localStorage.getItem('cr_lots')); if (!lots || !lots.length) lots = DEFAULT_LOTS.map(l=>({...l})); } catch(e) { lots = DEFAULT_LOTS.map(l=>({...l})); }
-  try { meta = JSON.parse(localStorage.getItem('cr_meta')) || {...DEFAULT_META}; } catch(e) { meta = {...DEFAULT_META}; }
-  try { saisie = JSON.parse(localStorage.getItem('cr_saisie')) || {}; } catch(e) { saisie = {}; }
+  try {
+    const raw = localStorage.getItem('cr_chantiers');
+    chantiers = raw ? JSON.parse(raw) : [];
+  } catch(e) { chantiers = []; }
+  // Migration : si ancien format (cr_cfg), importer
+  if (chantiers.length === 0) {
+    try {
+      const oldCfg = JSON.parse(localStorage.getItem('cr_cfg') || 'null');
+      const oldLots = JSON.parse(localStorage.getItem('cr_lots') || 'null');
+      const oldMeta = JSON.parse(localStorage.getItem('cr_meta') || 'null');
+      const oldSaisie = JSON.parse(localStorage.getItem('cr_saisie') || 'null');
+      if (oldCfg || oldMeta) {
+        const migrated = JSON.parse(JSON.stringify(BOULANGE_CHANTIER));
+        if (oldCfg) Object.assign(migrated, oldCfg);
+        if (oldLots) migrated.lots = oldLots;
+        if (oldMeta) migrated.meta = {...migrated.meta, ...oldMeta};
+        if (oldSaisie) migrated.saisie = oldSaisie;
+        chantiers = [migrated];
+      }
+    } catch(e) {}
+  }
+  if (chantiers.length === 0) {
+    chantiers = [JSON.parse(JSON.stringify(BOULANGE_CHANTIER))];
+  }
+  currentId = localStorage.getItem('cr_current') || chantiers[0].id;
+  if (!chantiers.find(c => c.id === currentId)) currentId = chantiers[0].id;
 }
 
-// ─── ROUTING ─────────────────────────────────────────────────────────────────
+// ─── ÉCRAN CHANTIERS ─────────────────────────────────────────────────────────
+function showChantiers() {
+  document.getElementById('screen-chantiers').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  renderChantiersList();
+}
+
+function renderChantiersList() {
+  const list = document.getElementById('chantiers-list');
+  if (chantiers.length === 0) {
+    list.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px 20px">Aucun chantier — créez-en un ci-dessous</p>';
+    return;
+  }
+  list.innerHTML = chantiers.map(c => {
+    const nCR = c.meta.num || '—';
+    const dateStr = c.meta.date ? new Date(c.meta.date + 'T12:00:00').toLocaleDateString('fr-FR') : '—';
+    return `<div class="chantier-card" onclick="openChantier('${c.id}')">
+      <div class="chantier-card-info">
+        <div class="chantier-card-name">${c.mo || 'Chantier sans nom'}</div>
+        <div class="chantier-card-addr">${c.adresse || ''}</div>
+        <div class="chantier-card-meta">CR N°${nCR} · ${dateStr} · ${c.operation || ''}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+        <div class="chantier-card-arrow">›</div>
+        <button onclick="event.stopPropagation();editChantierInfo('${c.id}')" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border);background:var(--bg);font-size:11px;color:var(--text2);cursor:pointer">⚙ Config</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openChantier(id) {
+  currentId = id;
+  currentLot = null;
+  currentPhase = 'B';
+  save();
+  document.getElementById('screen-chantiers').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  render();
+}
+
+function newChantier() {
+  const id = 'c_' + Date.now();
+  const nouveau = {
+    id,
+    mo: '',
+    adresse: '',
+    operation: '',
+    moe_societe: 'JUVENCEA',
+    moe_contact: 'M. Perron',
+    moe_tel: '06 19 16 46 69',
+    moe_mail: 'jeanmarc.perron@juvencea.com',
+    lots: DEFAULT_LOTS.map(l => ({...l})),
+    meta: { num:'1', date: today(), next:'', phase:'Phase 1 Exécution', chef:'', tech:'', code_cles:'', note_gen:'' },
+    saisie: {},
+    createdAt: Date.now(),
+  };
+  chantiers.push(nouveau);
+  save();
+  editChantierInfo(id, true);
+}
+
+function editChantierInfo(id, isNew = false) {
+  const c = chantiers.find(x => x.id === id);
+  document.getElementById('modal-content').innerHTML = `
+    <h3>${isNew ? 'Nouveau chantier' : 'Modifier le chantier'}</h3>
+    <div class="form-full"><label>Maître d'ouvrage (nom)</label><input type="text" id="ci-mo" value="${c.mo||''}" placeholder="ex. M. DUPONT"></div>
+    <div class="form-full"><label>Adresse du chantier</label><input type="text" id="ci-addr" value="${c.adresse||''}" placeholder="ex. 12 rue de la Paix – 59000 Lille"></div>
+    <div class="form-full"><label>Nom de l'opération</label><input type="text" id="ci-op" value="${c.operation||''}" placeholder="ex. RÉNOVATION MAISON"></div>
+    <div class="form-row">
+      <div><label>N° CR de départ</label><input type="text" id="ci-num" value="${c.meta.num||'1'}"></div>
+      <div><label>Phase</label><input type="text" id="ci-phase" value="${c.meta.phase||''}" placeholder="Phase 1 Exécution"></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="${isNew?'deleteChantier(\''+id+'\');closeModal()':'closeModal()'}">Annuler</button>
+      <button class="btn btn-primary" onclick="saveChantierInfo('${id}',${isNew})">Enregistrer</button>
+    </div>
+    ${!isNew ? `<button class="btn" style="width:100%;margin-top:8px;color:var(--red);border:1px solid var(--red);background:var(--red-bg)" onclick="deleteChantier('${id}')">Supprimer ce chantier</button>` : ''}
+  `;
+  document.getElementById('modal-bg').style.display = 'flex';
+}
+
+function saveChantierInfo(id, isNew) {
+  const c = chantiers.find(x => x.id === id);
+  c.mo = document.getElementById('ci-mo').value;
+  c.adresse = document.getElementById('ci-addr').value;
+  c.operation = document.getElementById('ci-op').value;
+  c.meta.num = document.getElementById('ci-num').value;
+  c.meta.phase = document.getElementById('ci-phase').value;
+  save();
+  closeModal();
+  if (isNew) {
+    openChantier(id);
+  } else {
+    renderChantiersList();
+  }
+}
+
+function deleteChantier(id) {
+  if (!confirm('Supprimer ce chantier et toutes ses données ?')) return;
+  chantiers = chantiers.filter(c => c.id !== id);
+  if (chantiers.length === 0) chantiers = [JSON.parse(JSON.stringify(BOULANGE_CHANTIER))];
+  currentId = chantiers[0].id;
+  save();
+  closeModal();
+  renderChantiersList();
+}
+
+// ─── ROUTING PRINCIPAL ───────────────────────────────────────────────────────
+const isWide = () => window.innerWidth >= 768;
+
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
   render();
 }
 
-const isWide = () => window.innerWidth >= 768;
-let currentLot = null;
-
 function render() {
-  const el = document.getElementById('content');
+  const c = C();
+  document.getElementById('topbar-mo').textContent = c.mo || 'Chantier sans nom';
+  document.getElementById('topbar-num').textContent = 'N°' + (c.meta.num || '—');
   const sb = document.getElementById('sidebar');
-  document.getElementById('topbar-mo').textContent = cfg.mo || 'CR Chantier';
-  document.getElementById('topbar-num').textContent = 'N°' + (meta.num || '—');
+  const el = document.getElementById('content');
   if (isWide() && currentTab === 'saisie') {
     sb.style.display = 'block';
     sb.innerHTML = renderSidebar();
@@ -270,281 +387,169 @@ function render() {
     <button class="btn btn-outline" onclick="resetSaisie()">↺ Nouveau CR</button>
     <button class="btn btn-primary" onclick="generateDocx()">⬇ Générer .docx</button>
   `;
-  bindEvents();
+}
+
+// ─── SAISIE ───────────────────────────────────────────────────────────────────
+function renderSaisie() {
+  const phases = [{id:'B',label:'1er étage'},{id:'C',label:'RDC'},{id:'D',label:'Divers'}];
+  const phaseTabs = `<div style="display:flex;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:14px">
+    ${phases.map(p=>`<div class="tab ${currentPhase===p.id?'active':''}" onclick="switchPhase('${p.id}')" style="padding:9px 4px;font-size:12px">${p.label}</div>`).join('')}
+  </div>`;
+  if (currentPhase === 'D') {
+    const key = 'D_divers'; const s = saisie()[key]||{};
+    return phaseTabs + `<div class="card"><div class="card-title">Observations diverses</div>
+      <div class="form-full"><label>Points divers…</label>
+      <div class="note-wrap"><textarea id="note_${key}" oninput="setNote('${key}',this.value)" placeholder="Saisissez ou dictez…">${s.note||''}</textarea>
+      <button class="mic-btn" onclick="toggleMic('${key}')">🎤</button></div>
+      <div class="mic-hint">Activez le 🎤 du clavier iPhone pour dicter</div></div></div>`;
+  }
+  return phaseTabs + lots().map(lot => {
+    const key=`${currentPhase}_${lot.id}`; const s=saisie()[key]||{}; const pres=s.presence||''; const convoc=s.convoc!==false;
+    return `<div class="card">
+      <div class="card-title">${lot.label}</div>
+      <div class="card-subtitle">${lot.company} — ${lot.contact}</div>
+      <div class="presence-row">
+        <button class="pres-btn ${pres==='P'?'P':''}" onclick="setPresence('${key}','P')">✓ Présent</button>
+        <button class="pres-btn ${pres==='E'?'E':''}" onclick="setPresence('${key}','E')">~ Excusé</button>
+        <button class="pres-btn ${pres==='A'?'A':''}" onclick="setPresence('${key}','A')">✗ Absent</button>
+      </div>
+      <div class="form-full"><label>Observations</label>
+      <div class="note-wrap"><textarea id="note_${key}" oninput="setNote('${key}',this.value)" placeholder="Dictez ou saisissez…">${s.note||''}</textarea>
+      <button class="mic-btn" onclick="toggleMic('${key}')">🎤</button></div>
+      <div class="mic-hint">🎤 du clavier iPhone pour dicter</div></div>
+      <div class="convoc-check"><input type="checkbox" id="conv_${key}" ${convoc?'checked':''} onchange="setConvoc('${key}',this.checked)">
+      <label for="conv_${key}">Convoquer à la prochaine réunion</label></div>
+    </div>`;
+  }).join('');
 }
 
 function renderSidebar() {
   const phases = [{id:'B',label:'1er étage'},{id:'C',label:'RDC'},{id:'D',label:'Divers'}];
-  const phaseTabs = phases.map(p =>
-    `<div class="sidebar-phase-tab ${currentPhase===p.id?'active':''}" onclick="switchPhase('${p.id}')">${p.label}</div>`
-  ).join('');
+  const phaseTabs = `<div class="sidebar-phase-tabs">${phases.map(p=>`<div class="sidebar-phase-tab ${currentPhase===p.id?'active':''}" onclick="switchPhase('${p.id}')">${p.label}</div>`).join('')}</div>`;
   let lotsList = '';
-  if (currentPhase === 'D') {
-    const s = saisie['D_divers'] || {};
-    lotsList = `<div class="sidebar-lot ${currentLot==='divers'?'active':''}" onclick="selectLot('divers')">
-      <div class="sidebar-lot-label">Observations diverses</div>
-      ${s.note ? '<div class="sidebar-pres P">Saisi</div>' : ''}
-    </div>`;
+  if (currentPhase==='D') {
+    const s=saisie()['D_divers']||{};
+    lotsList=`<div class="sidebar-lot ${currentLot==='divers'?'active':''}" onclick="selectLot('divers')">
+      <div class="sidebar-lot-label">Observations diverses</div>${s.note?'<div class="sidebar-pres P">Saisi</div>':''}</div>`;
   } else {
-    lotsList = lots.map(lot => {
-      const key = `${currentPhase}_${lot.id}`;
-      const s = saisie[key] || {};
-      const pr = s.presence || '';
+    lotsList=lots().map(lot=>{
+      const key=`${currentPhase}_${lot.id}`; const s=saisie()[key]||{}; const pr=s.presence||'';
       return `<div class="sidebar-lot ${currentLot===lot.id?'active':''}" onclick="selectLot('${lot.id}')">
         <div class="sidebar-lot-label">${lot.label}</div>
         <div class="sidebar-lot-co">${lot.company}</div>
-        ${pr ? `<span class="sidebar-pres ${pr}">${pr==='P'?'Présent':pr==='E'?'Excusé':'Absent'}</span>` : ''}
+        ${pr?`<span class="sidebar-pres ${pr}">${pr==='P'?'Présent':pr==='E'?'Excusé':'Absent'}</span>`:''}
       </div>`;
     }).join('');
   }
-  return `<div class="sidebar-phase-tabs">${phaseTabs}</div>
-    <div class="sidebar-section">Lots</div>
-    ${lotsList}
+  const c=C();
+  return `${phaseTabs}<div class="sidebar-section">Lots</div>${lotsList}
     <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
       <div class="sidebar-section">Réunion</div>
-      <div style="font-size:13px;color:var(--text2)">N° ${meta.num||'—'} · ${meta.date ? new Date(meta.date+'T12:00:00').toLocaleDateString('fr-FR') : '—'}</div>
-      <div style="font-size:12px;color:var(--text3);margin-top:2px">Prochaine : ${meta.next ? new Date(meta.next+'T12:00:00').toLocaleDateString('fr-FR') : '—'}</div>
+      <div style="font-size:13px;color:var(--text2)">N° ${c.meta.num||'—'} · ${c.meta.date?new Date(c.meta.date+'T12:00:00').toLocaleDateString('fr-FR'):'—'}</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:2px">Prochaine : ${c.meta.next?new Date(c.meta.next+'T12:00:00').toLocaleDateString('fr-FR'):'—'}</div>
     </div>`;
-}
-
-function selectLot(id) {
-  currentLot = id;
-  render();
 }
 
 function renderLotDetail() {
-  if (!currentLot) currentLot = currentPhase === 'D' ? 'divers' : (lots[0] ? lots[0].id : null);
-  if (currentPhase === 'D' || currentLot === 'divers') {
-    const key = 'D_divers';
-    const s = saisie[key] || {};
-    return `<div class="card" style="max-width:680px">
-      <div class="card-title">Observations diverses</div>
-      <div class="form-full">
-        <label>Points divers / SAV / Porte d'entrée…</label>
-        <div class="note-wrap">
-          <textarea id="note_${key}" placeholder="Saisissez…" oninput="setNote('${key}',this.value)" style="min-height:200px">${s.note||''}</textarea>
-          <button class="mic-btn" id="mic_${key}" onclick="toggleMic('${key}')">🎤</button>
-        </div>
-        <div class="mic-hint">Sur Mac : Fn Fn pour la dictée système</div>
-      </div>
-    </div>`;
+  if (!currentLot) currentLot = currentPhase==='D'?'divers':(lots()[0]?lots()[0].id:null);
+  if (currentPhase==='D'||currentLot==='divers') {
+    const key='D_divers'; const s=saisie()[key]||{};
+    return `<div class="card" style="max-width:680px"><div class="card-title">Observations diverses</div>
+      <div class="form-full"><label>Points divers…</label>
+      <div class="note-wrap"><textarea id="note_${key}" oninput="setNote('${key}',this.value)" style="min-height:200px" placeholder="Saisissez…">${s.note||''}</textarea>
+      <button class="mic-btn" onclick="toggleMic('${key}')">🎤</button></div>
+      <div class="mic-hint">Sur Mac : Fn Fn pour la dictée · Sur iPad : 🎤 du clavier</div></div></div>`;
   }
-  const lot = lots.find(l => l.id === currentLot);
+  const lot=lots().find(l=>l.id===currentLot);
   if (!lot) return '<p style="color:var(--text3);padding:20px">Sélectionnez un lot.</p>';
-  const key = `${currentPhase}_${lot.id}`;
-  const s = saisie[key] || {};
-  const pres = s.presence || '';
-  const convoc = s.convoc !== false;
-  const navBtns = lots.map(l => {
-    const k2 = `${currentPhase}_${l.id}`;
-    const done = (saisie[k2]||{}).note || (saisie[k2]||{}).presence;
-    const isActive = l.id === currentLot;
-    return `<button onclick="selectLot('${l.id}')" style="padding:5px 12px;border-radius:20px;border:1px solid ${isActive?'var(--accent)':'var(--border)'};background:${isActive?'var(--accent)':'var(--card)'};color:${isActive?'#fff':'var(--text2)'};font-size:12px;cursor:pointer;font-family:inherit">${done&&!isActive?'✓ ':''}${l.label.split(' ')[0]}</button>`;
+  const key=`${currentPhase}_${lot.id}`; const s=saisie()[key]||{}; const pres=s.presence||''; const convoc=s.convoc!==false;
+  const navBtns=lots().map(l=>{
+    const k2=`${currentPhase}_${l.id}`; const done=(saisie()[k2]||{}).note||(saisie()[k2]||{}).presence; const isAct=l.id===currentLot;
+    return `<button onclick="selectLot('${l.id}')" style="padding:5px 12px;border-radius:20px;border:1px solid ${isAct?'var(--accent)':'var(--border)'};background:${isAct?'var(--accent)':'var(--card)'};color:${isAct?'#fff':'var(--text2)'};font-size:12px;cursor:pointer;font-family:inherit">${done&&!isAct?'✓ ':''}${l.label.split(' ')[0]}</button>`;
   }).join('');
   return `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">${navBtns}</div>
     <div class="card" style="max-width:680px">
       <div class="card-title" style="font-size:15px">${lot.label}</div>
       <div class="card-subtitle" style="font-size:13px">${lot.company} — ${lot.contact}${lot.tel?' · '+lot.tel:''}</div>
-      <div style="margin-bottom:12px">
-        <label>Présence</label>
-        <div class="presence-row">
-          <button class="pres-btn ${pres==='P'?'P':''}" onclick="setPresence('${key}','P')">✓ Présent</button>
-          <button class="pres-btn ${pres==='E'?'E':''}" onclick="setPresence('${key}','E')">~ Excusé</button>
-          <button class="pres-btn ${pres==='A'?'A':''}" onclick="setPresence('${key}','A')">✗ Absent</button>
-        </div>
-      </div>
-      <div class="form-full">
-        <label>Observations — une ligne par point</label>
-        <div class="note-wrap">
-          <textarea id="note_${key}" placeholder="Saisissez les points du lot…" oninput="setNote('${key}',this.value)" style="min-height:220px">${s.note||''}</textarea>
-          <button class="mic-btn ${recTarget===key?'rec':''}" id="mic_${key}" onclick="toggleMic('${key}')">🎤</button>
-        </div>
-        <div class="mic-hint">Sur Mac : Fn Fn pour la dictée · Sur iPad : micro du clavier</div>
-      </div>
-      <div class="convoc-check">
-        <input type="checkbox" id="conv_${key}" ${convoc?'checked':''} onchange="setConvoc('${key}',this.checked)">
-        <label for="conv_${key}">Convoquer à la prochaine réunion</label>
-      </div>
+      <div style="margin-bottom:12px"><label>Présence</label>
+      <div class="presence-row">
+        <button class="pres-btn ${pres==='P'?'P':''}" onclick="setPresence('${key}','P')">✓ Présent</button>
+        <button class="pres-btn ${pres==='E'?'E':''}" onclick="setPresence('${key}','E')">~ Excusé</button>
+        <button class="pres-btn ${pres==='A'?'A':''}" onclick="setPresence('${key}','A')">✗ Absent</button>
+      </div></div>
+      <div class="form-full"><label>Observations — une ligne par point</label>
+      <div class="note-wrap"><textarea id="note_${key}" oninput="setNote('${key}',this.value)" style="min-height:220px" placeholder="Saisissez les points du lot…">${s.note||''}</textarea>
+      <button class="mic-btn" onclick="toggleMic('${key}')">🎤</button></div>
+      <div class="mic-hint">Sur Mac : Fn Fn pour dicter · Sur iPad : 🎤 du clavier</div></div>
+      <div class="convoc-check"><input type="checkbox" id="conv_${key}" ${convoc?'checked':''} onchange="setConvoc('${key}',this.checked)">
+      <label for="conv_${key}">Convoquer à la prochaine réunion</label></div>
     </div>`;
 }
 
-// ─── SAISIE ───────────────────────────────────────────────────────────────────
-function renderSaisie() {
-  const phases = [
-    { id:'B', label:'1er étage' },
-    { id:'C', label:'RDC' },
-    { id:'D', label:'Divers' },
-  ];
-  const phaseTabs = phases.map(p =>
-    `<div class="tab ${currentPhase===p.id?'active':''}" onclick="switchPhase('${p.id}')" style="padding:9px 4px;font-size:12px">${p.label}</div>`
-  ).join('');
+function switchPhase(ph) { currentPhase=ph; currentLot=null; render(); }
+function selectLot(id) { currentLot=id; render(); }
 
-  let lotsHtml = '';
-  if (currentPhase === 'D') {
-    const key = 'D_divers';
-    const s = saisie[key] || {};
-    lotsHtml = `
-      <div class="card">
-        <div class="card-title">Observations diverses</div>
-        <div class="form-full">
-          <label>Points divers / SAV / Porte d'entrée…</label>
-          <div class="note-wrap">
-            <textarea id="note_${key}" placeholder="Dictez ou saisissez…" oninput="setNote('${key}',this.value)">${s.note||''}</textarea>
-            <button class="mic-btn" id="mic_${key}" onclick="toggleMic('${key}')">🎤</button>
-          </div>
-          <div class="mic-hint">Appuyez sur 🎤 puis activez le micro du clavier iPhone</div>
-        </div>
-      </div>`;
-  } else {
-    lots.forEach(lot => {
-      const key = `${currentPhase}_${lot.id}`;
-      const s = saisie[key] || {};
-      const pres = s.presence || '';
-      const convoc = s.convoc !== false;
-      lotsHtml += `
-        <div class="card">
-          <div class="card-title">${lot.label}</div>
-          <div class="card-subtitle">${lot.company} — ${lot.contact}</div>
-          <div class="presence-row">
-            <button class="pres-btn ${pres==='P'?'P':''}" onclick="setPresence('${key}','P')">✓ Présent</button>
-            <button class="pres-btn ${pres==='E'?'E':''}" onclick="setPresence('${key}','E')">~ Excusé</button>
-            <button class="pres-btn ${pres==='A'?'A':''}" onclick="setPresence('${key}','A')">✗ Absent</button>
-          </div>
-          <div class="form-full">
-            <label>Observations</label>
-            <div class="note-wrap">
-              <textarea id="note_${key}" placeholder="Dictez ou saisissez les points du lot…" oninput="setNote('${key}',this.value)">${s.note||''}</textarea>
-              <button class="mic-btn ${recTarget===key?'rec':''}" id="mic_${key}" onclick="toggleMic('${key}')">🎤</button>
-            </div>
-            <div class="mic-hint">Sur iPhone : activez le micro 🎤 du clavier pour dicter</div>
-          </div>
-          <div class="convoc-check">
-            <input type="checkbox" id="conv_${key}" ${convoc?'checked':''} onchange="setConvoc('${key}',this.checked)">
-            <label for="conv_${key}">Convoquer à la prochaine réunion</label>
-          </div>
-        </div>`;
-    });
-  }
-
-  return `
-    <div style="display:flex;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:14px;">
-      ${phaseTabs}
-    </div>
-    ${lotsHtml}
-  `;
-}
-
-function switchPhase(ph) {
-  currentPhase = ph;
-  currentLot = null;
-  render();
-}
-
-function setPresence(key, val) {
-  if (!saisie[key]) saisie[key] = {};
-  saisie[key].presence = saisie[key].presence === val ? '' : val;
+function setPresence(key,val) {
+  const s=saisie(); if(!s[key])s[key]={};
+  s[key].presence = s[key].presence===val?'':val;
   save(); render();
 }
-
-function setNote(key, val) {
-  if (!saisie[key]) saisie[key] = {};
-  saisie[key].note = val;
-  save();
+function setNote(key,val) {
+  const s=saisie(); if(!s[key])s[key]={}; s[key].note=val; save();
 }
-
-function setConvoc(key, val) {
-  if (!saisie[key]) saisie[key] = {};
-  saisie[key].convoc = val;
-  save();
+function setConvoc(key,val) {
+  const s=saisie(); if(!s[key])s[key]={}; s[key].convoc=val; save();
 }
-
 function toggleMic(key) {
-  const ta = document.getElementById('note_' + key);
-  if (ta) { ta.focus(); ta.click(); }
-  showToast('Activez le 🎤 sur votre clavier iPhone pour dicter');
+  const ta=document.getElementById('note_'+key);
+  if(ta){ta.focus();ta.click();}
+  showToast('Activez le 🎤 sur votre clavier pour dicter');
 }
 
-// ─── META ─────────────────────────────────────────────────────────────────────
+// ─── RÉUNION ─────────────────────────────────────────────────────────────────
 function renderMeta() {
-  return `
-    <div class="card">
-      <div class="card-title">Réunion</div>
-      <div class="form-row">
-        <div>
-          <label>N° de réunion</label>
-          <input type="text" value="${meta.num||''}" oninput="setMeta('num',this.value)" placeholder="12">
-        </div>
-        <div>
-          <label>Phase</label>
-          <input type="text" value="${meta.phase||''}" oninput="setMeta('phase',this.value)" placeholder="Phase 2 Exécution">
-        </div>
-      </div>
-      <div class="form-row">
-        <div>
-          <label>Date de visite</label>
-          <input type="date" value="${meta.date||''}" oninput="setMeta('date',this.value)">
-        </div>
-        <div>
-          <label>Prochaine réunion</label>
-          <input type="date" value="${meta.next||''}" oninput="setMeta('next',this.value)">
-        </div>
-      </div>
-      <div class="form-row">
-        <div>
-          <label>Chef de chantier</label>
-          <input type="text" value="${meta.chef||''}" oninput="setMeta('chef',this.value)" placeholder="Nb présents">
-        </div>
-        <div>
-          <label>Techniciens</label>
-          <input type="text" value="${meta.tech||''}" oninput="setMeta('tech',this.value)" placeholder="Nb présents">
-        </div>
-      </div>
+  const m=meta();
+  return `<div class="card"><div class="card-title">Réunion</div>
+    <div class="form-row">
+      <div><label>N° de réunion</label><input type="text" value="${m.num||''}" oninput="setMeta('num',this.value)" placeholder="12"></div>
+      <div><label>Phase</label><input type="text" value="${m.phase||''}" oninput="setMeta('phase',this.value)"></div>
     </div>
-    <div class="card">
-      <div class="card-title">Rappels administratifs</div>
-      <div class="form-full">
-        <label>Boîte à clés – code</label>
-        <input type="text" value="${meta.code_cles||'2018'}" oninput="setMeta('code_cles',this.value)">
-      </div>
-      <div class="form-full">
-        <label>Note générale (EPI, propreté…)</label>
-        <textarea style="min-height:70px" oninput="setMeta('note_gen',this.value)">${meta.note_gen||''}</textarea>
-      </div>
+    <div class="form-row">
+      <div><label>Date de visite</label><input type="date" value="${m.date||''}" oninput="setMeta('date',this.value)"></div>
+      <div><label>Prochaine réunion</label><input type="date" value="${m.next||''}" oninput="setMeta('next',this.value)"></div>
     </div>
-  `;
+    <div class="form-row">
+      <div><label>Chef de chantier</label><input type="text" value="${m.chef||''}" oninput="setMeta('chef',this.value)"></div>
+      <div><label>Technicien(s)</label><input type="text" value="${m.tech||''}" oninput="setMeta('tech',this.value)"></div>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Rappels</div>
+    <div class="form-full"><label>Boîte à clés – code</label><input type="text" value="${m.code_cles||''}" oninput="setMeta('code_cles',this.value)"></div>
+    <div class="form-full"><label>Note générale</label><textarea style="min-height:70px" oninput="setMeta('note_gen',this.value)">${m.note_gen||''}</textarea></div>
+  </div>`;
+}
+function setMeta(key,val) {
+  meta()[key]=val; save();
+  if(key==='num') document.getElementById('topbar-num').textContent='N°'+(val||'—');
 }
 
-function setMeta(key, val) {
-  meta[key] = val;
-  save();
-  document.getElementById('topbar-num').textContent = 'N°' + (meta.num || '—');
-}
-
-// ─── INTERVENANTS ─────────────────────────────────────────────────────────────
+// ─── ÉQUIPE ───────────────────────────────────────────────────────────────────
 function renderIntervenants() {
-  const rows = lots.map((lot, i) => `
-    <div class="intervenant-row">
+  return `<div class="card"><div class="card-title">Intervenants</div>
+    ${lots().map((lot,i)=>`<div class="intervenant-row">
       <div class="int-info">
         <div class="int-lot">${lot.label}</div>
         <div class="int-name">${lot.contact}</div>
         <div class="int-co">${lot.company}</div>
       </div>
       <button class="edit-btn" onclick="editIntervenant(${i})">Modifier</button>
-    </div>
-  `).join('');
-  return `
-    <div class="card">
-      <div class="card-title">Intervenants</div>
-      ${rows}
-      <button class="btn btn-outline" style="width:100%;margin-top:12px" onclick="addIntervenant()">+ Ajouter un lot</button>
-    </div>
-    <div style="height:20px"></div>
-  `;
+    </div>`).join('')}
+    <button class="btn btn-outline" style="width:100%;margin-top:12px" onclick="addIntervenant()">+ Ajouter un lot</button>
+  </div>`;
 }
-
 function editIntervenant(i) {
-  const lot = lots[i];
-  document.getElementById('modal-content').innerHTML = `
+  const lot=lots()[i];
+  document.getElementById('modal-content').innerHTML=`
     <h3>Modifier — ${lot.label}</h3>
     <div class="form-full"><label>Lot / libellé</label><input type="text" id="ei-label" value="${lot.label}"></div>
     <div class="form-full"><label>Société</label><input type="text" id="ei-company" value="${lot.company}"></div>
@@ -555,332 +560,186 @@ function editIntervenant(i) {
       <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
       <button class="btn btn-primary" onclick="saveIntervenant(${i})">Enregistrer</button>
     </div>
-    <button class="btn" style="width:100%;margin-top:8px;color:var(--red);border:1px solid var(--red);background:var(--red-bg)" onclick="deleteIntervenant(${i})">Supprimer ce lot</button>
-  `;
-  document.getElementById('modal-bg').style.display = 'flex';
+    <button class="btn" style="width:100%;margin-top:8px;color:var(--red);border:1px solid var(--red);background:var(--red-bg)" onclick="deleteIntervenant(${i})">Supprimer ce lot</button>`;
+  document.getElementById('modal-bg').style.display='flex';
 }
-
 function addIntervenant() {
-  const newId = 'lot_' + Date.now();
-  lots.push({ id: newId, label: 'Nouveau lot', company: '', contact: '', tel: '', mail: '' });
-  save();
-  editIntervenant(lots.length - 1);
+  lots().push({id:'lot_'+Date.now(),label:'Nouveau lot',company:'',contact:'',tel:'',mail:''});
+  save(); editIntervenant(lots().length-1);
 }
-
 function saveIntervenant(i) {
-  lots[i].label = document.getElementById('ei-label').value;
-  lots[i].company = document.getElementById('ei-company').value;
-  lots[i].contact = document.getElementById('ei-contact').value;
-  lots[i].tel = document.getElementById('ei-tel').value;
-  lots[i].mail = document.getElementById('ei-mail').value;
+  const lot=lots()[i];
+  lot.label=document.getElementById('ei-label').value;
+  lot.company=document.getElementById('ei-company').value;
+  lot.contact=document.getElementById('ei-contact').value;
+  lot.tel=document.getElementById('ei-tel').value;
+  lot.mail=document.getElementById('ei-mail').value;
   save(); closeModal(); render();
 }
-
 function deleteIntervenant(i) {
-  lots.splice(i, 1);
-  save(); closeModal(); render();
+  lots().splice(i,1); save(); closeModal(); render();
 }
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 function renderConfig() {
-  return `
-    <div class="card">
-      <div class="card-title">Maître d'ouvrage</div>
-      <div class="form-full"><label>Nom MO</label><input type="text" value="${cfg.mo||''}" oninput="setCfg('mo',this.value)"></div>
-      <div class="form-full"><label>Adresse</label><input type="text" value="${cfg.adresse||''}" oninput="setCfg('adresse',this.value)"></div>
-      <div class="form-full"><label>Opération</label><input type="text" value="${cfg.operation||''}" oninput="setCfg('operation',this.value)"></div>
+  const c=C();
+  return `<div class="card"><div class="card-title">Maître d'ouvrage</div>
+    <div class="form-full"><label>Nom MO</label><input type="text" value="${c.mo||''}" oninput="setCfg('mo',this.value)"></div>
+    <div class="form-full"><label>Adresse</label><input type="text" value="${c.adresse||''}" oninput="setCfg('adresse',this.value)"></div>
+    <div class="form-full"><label>Opération</label><input type="text" value="${c.operation||''}" oninput="setCfg('operation',this.value)"></div>
+  </div>
+  <div class="card"><div class="card-title">Maître d'œuvre</div>
+    <div class="form-full"><label>Société MOE</label><input type="text" value="${c.moe_societe||''}" oninput="setCfg('moe_societe',this.value)"></div>
+    <div class="form-row">
+      <div><label>Contact</label><input type="text" value="${c.moe_contact||''}" oninput="setCfg('moe_contact',this.value)"></div>
+      <div><label>Téléphone</label><input type="text" value="${c.moe_tel||''}" oninput="setCfg('moe_tel',this.value)"></div>
     </div>
-    <div class="card">
-      <div class="card-title">Maître d'œuvre</div>
-      <div class="form-full"><label>Société MOE</label><input type="text" value="${cfg.moe_societe||''}" oninput="setCfg('moe_societe',this.value)"></div>
-      <div class="form-row">
-        <div><label>Contact</label><input type="text" value="${cfg.moe_contact||''}" oninput="setCfg('moe_contact',this.value)"></div>
-        <div><label>Téléphone</label><input type="text" value="${cfg.moe_tel||''}" oninput="setCfg('moe_tel',this.value)"></div>
-      </div>
-      <div class="form-full"><label>Email</label><input type="text" value="${cfg.moe_mail||''}" oninput="setCfg('moe_mail',this.value)"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Données</div>
-      <button class="btn btn-outline" style="width:100%;margin-bottom:8px" onclick="exportData()">⬆ Exporter la config</button>
-      <button class="btn" style="width:100%;color:var(--red);border:1px solid var(--red);background:var(--red-bg)" onclick="confirmReset()">⚠ Réinitialiser tout</button>
-    </div>
-  `;
+    <div class="form-full"><label>Email</label><input type="text" value="${c.moe_mail||''}" oninput="setCfg('moe_mail',this.value)"></div>
+  </div>
+  <div class="card"><div class="card-title">Chantiers</div>
+    <button class="btn btn-outline" style="width:100%;margin-bottom:8px" onclick="showChantiers()">⇄ Gérer mes chantiers</button>
+    <button class="btn" style="width:100%;color:var(--red);border:1px solid var(--red);background:var(--red-bg)" onclick="confirmReset()">⚠ Réinitialiser ce chantier</button>
+  </div>`;
+}
+function setCfg(key,val) {
+  C()[key]=val; save();
+  if(key==='mo') document.getElementById('topbar-mo').textContent=val||'Chantier sans nom';
 }
 
-function setCfg(key, val) {
-  cfg[key] = val;
-  save();
-  if (key === 'mo') document.getElementById('topbar-mo').textContent = val || 'CR Chantier';
-}
-
-function exportData() {
-  const data = JSON.stringify({ cfg, lots, meta }, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'cr_chantier_config.json'; a.click();
-  showToast('Config exportée');
-}
-
-function confirmReset() {
-  if (confirm('Réinitialiser TOUTE la configuration et les saisies ?')) {
-    localStorage.clear(); load(); render(); showToast('Réinitialisé');
-  }
-}
-
-function resetSaisie() {
-  if (confirm('Effacer toutes les saisies du CR en cours (trame conservée) ?')) {
-    saisie = {}; save(); render(); showToast('Nouveau CR prêt');
-  }
-}
-
-// ─── MODAL ────────────────────────────────────────────────────────────────────
+// ─── MODAL / TOAST ────────────────────────────────────────────────────────────
 function closeModal(e) {
-  if (!e || e.target === document.getElementById('modal-bg')) {
-    document.getElementById('modal-bg').style.display = 'none';
-    render();
+  if(!e||e.target===document.getElementById('modal-bg')) {
+    document.getElementById('modal-bg').style.display='none'; render();
+  }
+}
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+function bindEvents(){}
+
+// ─── ACTIONS ─────────────────────────────────────────────────────────────────
+function resetSaisie() {
+  if(confirm('Effacer les saisies du CR en cours ? La trame est conservée.')) {
+    C().saisie={}; save(); render(); showToast('Nouveau CR prêt');
+  }
+}
+function confirmReset() {
+  if(confirm('Réinitialiser toute la config de ce chantier ?')) {
+    const idx=chantiers.findIndex(c=>c.id===currentId);
+    chantiers[idx]={...JSON.parse(JSON.stringify(BOULANGE_CHANTIER)),id:currentId};
+    save(); render(); showToast('Réinitialisé');
   }
 }
 
-// ─── TOAST ────────────────────────────────────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-// ─── BIND EVENTS ─────────────────────────────────────────────────────────────
-function bindEvents() {}
-
-// ─── DOCX GENERATION ─────────────────────────────────────────────────────────
+// ─── GÉNÉRATION DOCX ─────────────────────────────────────────────────────────
 async function generateDocx() {
   showToast('Génération du .docx…');
-  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-          AlignmentType, WidthType, BorderStyle, ShadingType, HeadingLevel, VerticalAlign } = docx;
-
-  const fmtDate = (d) => {
-    if (!d) return '—';
-    const parts = d.split('-');
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-  };
-
-  const presenceMap = { P: 'P', E: 'E', A: 'A', '': '' };
-  const presLabel = { P: 'Présent', E: 'Excusé', A: 'Absent', '': '' };
-
-  const border = { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' };
-  const borders = { top: border, bottom: border, left: border, right: border };
-  const noBorder = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
-  const noBorders = { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder };
-  const headerBorder = { style: BorderStyle.SINGLE, size: 1, color: '2D4A6B' };
-  const headerBorders = { top: headerBorder, bottom: headerBorder, left: headerBorder, right: headerBorder };
-
-  const cell = (text, opts = {}) => new TableCell({
-    borders: opts.header ? headerBorders : borders,
-    width: opts.width ? { size: opts.width, type: WidthType.DXA } : undefined,
-    shading: opts.bg ? { fill: opts.bg, type: ShadingType.CLEAR } : undefined,
-    verticalAlign: VerticalAlign.CENTER,
-    margins: { top: 60, bottom: 60, left: 100, right: 100 },
-    children: [new Paragraph({
-      alignment: AlignmentType.LEFT,
-      children: [new TextRun({ text: String(text), bold: !!opts.bold, size: opts.size || 18, font: 'Arial', color: opts.color || '000000' })]
-    })]
+  const c=C(); const m=meta(); const s=saisie(); const l=lots();
+  const {Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,
+         AlignmentType,WidthType,BorderStyle,ShadingType,HeadingLevel,VerticalAlign}=docx;
+  const fmtDate=d=>{if(!d)return'—';const p=d.split('-');return`${p[2]}/${p[1]}/${p[0]}`};
+  const presLabel={P:'Présent',E:'Excusé',A:'Absent','':''};
+  const bdr={style:BorderStyle.SINGLE,size:1,color:'CCCCCC'};
+  const bdrs={top:bdr,bottom:bdr,left:bdr,right:bdr};
+  const hbdr={style:BorderStyle.SINGLE,size:1,color:'2D4A6B'};
+  const hbdrs={top:hbdr,bottom:hbdr,left:hbdr,right:hbdr};
+  const cell=(text,opts={})=>new TableCell({
+    borders:opts.header?hbdrs:bdrs,
+    width:opts.width?{size:opts.width,type:WidthType.DXA}:undefined,
+    shading:opts.bg?{fill:opts.bg,type:ShadingType.CLEAR}:undefined,
+    verticalAlign:VerticalAlign.CENTER,
+    margins:{top:60,bottom:60,left:100,right:100},
+    children:[new Paragraph({alignment:AlignmentType.LEFT,children:[new TextRun({text:String(text),bold:!!opts.bold,size:opts.size||18,font:'Arial',color:opts.color||'000000'})]})]
   });
+  const h=(text,lvl,opts={})=>new Paragraph({heading:lvl,spacing:{before:opts.before||200,after:opts.after||120},children:[new TextRun({text,bold:true,size:opts.size||(lvl===HeadingLevel.HEADING_1?26:22),font:'Arial',color:opts.color||'2D4A6B'})]});
+  const p=(text,opts={})=>new Paragraph({spacing:{before:opts.before||60,after:opts.after||60},bullet:opts.bullet?{level:0}:undefined,children:[new TextRun({text:String(text),size:opts.size||19,font:'Arial',bold:opts.bold||false,color:opts.color||'000000'})]});
 
-  const h = (text, lvl, opts = {}) => new Paragraph({
-    heading: lvl,
-    spacing: { before: opts.before || 200, after: opts.after || 120 },
-    children: [new TextRun({ text, bold: true, size: opts.size || (lvl === HeadingLevel.HEADING_1 ? 26 : 22), font: 'Arial', color: opts.color || '2D4A6B' })]
-  });
-
-  const p = (text, opts = {}) => new Paragraph({
-    spacing: { before: opts.before || 60, after: opts.after || 60 },
-    bullet: opts.bullet ? { level: 0 } : undefined,
-    children: [new TextRun({ text: String(text), size: opts.size || 19, font: 'Arial', bold: opts.bold || false, color: opts.color || '000000' })]
-  });
-
-  // Build presence table
-  const presRow = (isHeader, vals) => new TableRow({
-    tableHeader: isHeader,
-    children: [
-      cell(vals[0], { width: 1800, bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-      cell(vals[1], { width: 2200, bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-      cell(vals[2], { width: 1800, bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-      cell(vals[3], { width: 1400, bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-      cell(vals[4], { width: 800,  bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-      cell(vals[5], { width: 800,  bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-      cell(vals[6], { width: 800,  bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-      cell(vals[7], { width: 800,  bold: isHeader, bg: isHeader ? 'D0D9E8' : undefined, header: isHeader }),
-    ]
-  });
-
-  const presTableRows = [
-    presRow(true, ['LOT','SOCIÉTÉ','CONTACT','TÉL','P','E','A','C']),
-    new TableRow({ children: [
-      cell('Maître d\'Ouvrage', { width: 1800 }),
-      cell(cfg.mo, { width: 2200 }),
-      cell('', { width: 1800 }),
-      cell('', { width: 1400 }),
-      cell((saisie['MO']||{}).presence === 'P' ? 'x' : '', { width: 800 }),
-      cell((saisie['MO']||{}).presence === 'E' ? 'x' : '', { width: 800 }),
-      cell((saisie['MO']||{}).presence === 'A' ? 'x' : '', { width: 800 }),
-      cell('x', { width: 800 }),
+  const presRows=[
+    new TableRow({tableHeader:true,children:[
+      cell('LOT',{width:1800,bold:true,bg:'D0D9E8',header:true}),cell('SOCIÉTÉ',{width:2200,bold:true,bg:'D0D9E8',header:true}),
+      cell('CONTACT',{width:1800,bold:true,bg:'D0D9E8',header:true}),cell('TÉL',{width:1400,bold:true,bg:'D0D9E8',header:true}),
+      cell('P',{width:800,bold:true,bg:'D0D9E8',header:true}),cell('E',{width:800,bold:true,bg:'D0D9E8',header:true}),
+      cell('A',{width:800,bold:true,bg:'D0D9E8',header:true}),cell('C',{width:800,bold:true,bg:'D0D9E8',header:true}),
     ]}),
-    new TableRow({ children: [
-      cell('Maître d\'œuvre', { width: 1800 }),
-      cell(cfg.moe_societe, { width: 2200 }),
-      cell(cfg.moe_contact, { width: 1800 }),
-      cell(cfg.moe_tel, { width: 1400 }),
-      cell('x', { width: 800 }),
-      cell('', { width: 800 }),
-      cell('', { width: 800 }),
-      cell('x', { width: 800 }),
-    ]}),
-    ...lots.map(lot => {
-      const keyB = 'B_' + lot.id;
-      const s = saisie[keyB] || {};
-      const pr = s.presence || '';
-      return new TableRow({ children: [
-        cell(lot.label, { width: 1800 }),
-        cell(lot.company, { width: 2200 }),
-        cell(lot.contact, { width: 1800 }),
-        cell(lot.tel, { width: 1400 }),
-        cell(pr === 'P' ? 'x' : '', { width: 800 }),
-        cell(pr === 'E' ? 'x' : '', { width: 800 }),
-        cell(pr === 'A' ? 'x' : '', { width: 800 }),
-        cell(s.convoc !== false ? 'x' : '', { width: 800 }),
-      ]});
+    new TableRow({children:[cell("Maître d'Ouvrage",{width:1800}),cell(c.mo,{width:2200}),cell('',{width:1800}),cell('',{width:1400}),cell('x',{width:800}),cell('',{width:800}),cell('',{width:800}),cell('x',{width:800})]}),
+    new TableRow({children:[cell("Maître d'œuvre",{width:1800}),cell(c.moe_societe,{width:2200}),cell(c.moe_contact,{width:1800}),cell(c.moe_tel,{width:1400}),cell('x',{width:800}),cell('',{width:800}),cell('',{width:800}),cell('x',{width:800})]}),
+    ...l.map(lot=>{
+      const kb='B_'+lot.id; const sb2=s[kb]||{}; const pr=sb2.presence||'';
+      return new TableRow({children:[cell(lot.label,{width:1800}),cell(lot.company,{width:2200}),cell(lot.contact,{width:1800}),cell(lot.tel,{width:1400}),cell(pr==='P'?'x':'',{width:800}),cell(pr==='E'?'x':'',{width:800}),cell(pr==='A'?'x':'',{width:800}),cell(sb2.convoc!==false?'x':'',{width:800})]});
     })
   ];
+  const presTable=new Table({width:{size:9400,type:WidthType.DXA},columnWidths:[1800,2200,1800,1400,800,800,800,800],rows:presRows});
 
-  const presTable = new Table({
-    width: { size: 9400, type: WidthType.DXA },
-    columnWidths: [1800, 2200, 1800, 1400, 800, 800, 800, 800],
-    rows: presTableRows,
-  });
-
-  // Build lot sections
-  const phasesSections = [
-    { id: 'B', title: 'B / PHASE II : EXÉCUTION 1er ÉTAGE' },
-    { id: 'C', title: 'C / PHASE III : EXÉCUTION RDC' },
-  ];
-
-  const lotChildren = [];
-  phasesSections.forEach(ph => {
-    let hasContent = false;
-    const phItems = [];
-    lots.forEach(lot => {
-      const key = ph.id + '_' + lot.id;
-      const s = saisie[key] || {};
-      const note = (s.note || '').trim();
-      const pr = s.presence || '';
-      if (note || pr) {
-        hasContent = true;
-        phItems.push(h(`${lot.label} — ${lot.company}${pr ? ' (' + presLabel[pr] + ')' : ''}`, HeadingLevel.HEADING_2, { before: 140, after: 80 }));
-        if (note) {
-          note.split('\n').forEach(line => {
-            if (line.trim()) phItems.push(p('• ' + line.trim(), { before: 40, after: 40 }));
-          });
-        } else {
-          phItems.push(p('—', { before: 40, after: 40 }));
-        }
+  const lotChildren=[];
+  [{id:'B',title:'B / PHASE II : EXÉCUTION 1er ÉTAGE'},{id:'C',title:'C / PHASE III : EXÉCUTION RDC'}].forEach(ph=>{
+    const items=[];
+    l.forEach(lot=>{
+      const key=ph.id+'_'+lot.id; const ls=s[key]||{}; const note=(ls.note||'').trim(); const pr=ls.presence||'';
+      if(note||pr){
+        items.push(h(`${lot.label} — ${lot.company}${pr?' ('+presLabel[pr]+')':''}`,HeadingLevel.HEADING_2,{before:140,after:80}));
+        if(note) note.split('\n').forEach(line=>{if(line.trim())items.push(p('• '+line.trim(),{before:40,after:40}));});
+        else items.push(p('—',{before:40,after:40}));
       }
     });
-    if (hasContent) {
-      lotChildren.push(h(ph.title, HeadingLevel.HEADING_1, { before: 300, after: 120 }));
-      phItems.forEach(i => lotChildren.push(i));
-    }
+    if(items.length){lotChildren.push(h(ph.title,HeadingLevel.HEADING_1,{before:300,after:120}));items.forEach(i=>lotChildren.push(i));}
   });
-
-  // Divers
-  const diversNote = (saisie['D_divers'] || {}).note || '';
-  if (diversNote.trim()) {
-    lotChildren.push(h('D / DIVERS', HeadingLevel.HEADING_1, { before: 300, after: 120 }));
-    diversNote.split('\n').forEach(line => {
-      if (line.trim()) lotChildren.push(p('• ' + line.trim(), { before: 40, after: 40 }));
-    });
+  const diversNote=(s['D_divers']||{}).note||'';
+  if(diversNote.trim()){
+    lotChildren.push(h('D / DIVERS',HeadingLevel.HEADING_1,{before:300,after:120}));
+    diversNote.split('\n').forEach(line=>{if(line.trim())lotChildren.push(p('• '+line.trim(),{before:40,after:40}));});
   }
 
-  const doc = new Document({
-    styles: {
-      default: { document: { run: { font: 'Arial', size: 20 } } },
-      paragraphStyles: [
-        { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true,
-          run: { size: 26, bold: true, font: 'Arial', color: '2D4A6B' },
-          paragraph: { spacing: { before: 240, after: 120 }, outlineLevel: 0 } },
-        { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true,
-          run: { size: 22, bold: true, font: 'Arial', color: '4A7FA5' },
-          paragraph: { spacing: { before: 160, after: 80 }, outlineLevel: 1 } },
-      ]
-    },
-    sections: [{
-      properties: {
-        page: {
-          size: { width: 11906, height: 16838 },
-          margin: { top: 1000, right: 1000, bottom: 1000, left: 1000 }
-        }
-      },
-      children: [
-        // EN-TÊTE
-        p(cfg.mo, { bold: true, size: 20, color: '2D4A6B' }),
-        p(cfg.adresse, { size: 18, color: '666666' }),
-        new Paragraph({ spacing: { before: 0, after: 0 }, children: [] }),
-        p(`MAÎTRE D'OUVRAGE : ${cfg.mo}`, { bold: true, size: 20 }),
-        new Paragraph({ spacing: { before: 0, after: 0 }, children: [] }),
-        p(cfg.operation, { bold: true, size: 22 }),
-        p(`Située au ${cfg.adresse}`, { size: 18 }),
-        new Paragraph({ spacing: { before: 0, after: 200 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '2D4A6B', space: 4 } }, children: [] }),
-
-        // TITRE CR
-        new Paragraph({
-          alignment: AlignmentType.CENTER,
-          spacing: { before: 200, after: 200 },
-          children: [new TextRun({ text: `COMPTE RENDU DE RÉUNION DE CHANTIER N°${meta.num} — ${meta.phase}`, bold: true, size: 26, font: 'Arial', color: '2D4A6B' })]
-        }),
-
-        // INFOS RÉUNION
-        p(`Visite de chantier du : ${fmtDate(meta.date)}`, { bold: true }),
-        p(`Prochaine réunion le : ${fmtDate(meta.next)}`, {}),
-        ...(meta.chef ? [p(`Chef de chantier : ${meta.chef}`)] : []),
-        ...(meta.tech ? [p(`Technicien(s) : ${meta.tech}`)] : []),
-
-        new Paragraph({ spacing: { before: 200, after: 100 }, children: [] }),
-
-        // SECTION 1 : PRÉSENCES
-        h('1 – COORDONNÉES ET PRÉSENCES', HeadingLevel.HEADING_1),
-        presTable,
-        p('P : Présent – E : Excusé – A : Absent – C : Convocation prochaine réunion', { size: 16, color: '666666', before: 80 }),
-
-        new Paragraph({ spacing: { before: 160, after: 100 }, children: [] }),
-
-        // SECTION 2 : PIÈCES ADMIN
-        h('2 – PIÈCES ADMINISTRATIVES', HeadingLevel.HEADING_1),
-        p(`Boîte à clés sur site — code : ${meta.code_cles || '2018'}`),
-        ...(meta.note_gen ? [p(meta.note_gen)] : []),
-
-        new Paragraph({ spacing: { before: 200, after: 100 }, children: [] }),
-
-        // LOT SECTIONS
-        ...lotChildren,
-      ]
-    }]
+  const doc=new Document({
+    styles:{default:{document:{run:{font:'Arial',size:20}}},paragraphStyles:[
+      {id:'Heading1',name:'Heading 1',basedOn:'Normal',next:'Normal',quickFormat:true,run:{size:26,bold:true,font:'Arial',color:'2D4A6B'},paragraph:{spacing:{before:240,after:120},outlineLevel:0}},
+      {id:'Heading2',name:'Heading 2',basedOn:'Normal',next:'Normal',quickFormat:true,run:{size:22,bold:true,font:'Arial',color:'4A7FA5'},paragraph:{spacing:{before:160,after:80},outlineLevel:1}},
+    ]},
+    sections:[{properties:{page:{size:{width:11906,height:16838},margin:{top:1000,right:1000,bottom:1000,left:1000}}},
+    children:[
+      p(c.mo,{bold:true,size:20,color:'2D4A6B'}),
+      p(c.adresse,{size:18,color:'666666'}),
+      new Paragraph({spacing:{before:0,after:0},children:[]}),
+      p(`MAÎTRE D'OUVRAGE : ${c.mo}`,{bold:true,size:20}),
+      new Paragraph({spacing:{before:0,after:0},children:[]}),
+      p(c.operation,{bold:true,size:22}),
+      p(`Située au ${c.adresse}`,{size:18}),
+      new Paragraph({spacing:{before:0,after:200},border:{bottom:{style:BorderStyle.SINGLE,size:6,color:'2D4A6B',space:4}},children:[]}),
+      new Paragraph({alignment:AlignmentType.CENTER,spacing:{before:200,after:200},children:[new TextRun({text:`COMPTE RENDU DE RÉUNION DE CHANTIER N°${m.num} — ${m.phase}`,bold:true,size:26,font:'Arial',color:'2D4A6B'})]}),
+      p(`Visite de chantier du : ${fmtDate(m.date)}`,{bold:true}),
+      p(`Prochaine réunion le : ${fmtDate(m.next)}`),
+      ...(m.chef?[p(`Chef de chantier : ${m.chef}`)]:[]),
+      ...(m.tech?[p(`Technicien(s) : ${m.tech}`)]:[]),
+      new Paragraph({spacing:{before:200,after:100},children:[]}),
+      h('1 – COORDONNÉES ET PRÉSENCES',HeadingLevel.HEADING_1),
+      presTable,
+      p('P : Présent – E : Excusé – A : Absent – C : Convocation prochaine réunion',{size:16,color:'666666',before:80}),
+      new Paragraph({spacing:{before:160,after:100},children:[]}),
+      h('2 – PIÈCES ADMINISTRATIVES',HeadingLevel.HEADING_1),
+      p(`Boîte à clés sur site — code : ${m.code_cles||'—'}`),
+      ...(m.note_gen?[p(m.note_gen)]:[]),
+      new Paragraph({spacing:{before:200,after:100},children:[]}),
+      ...lotChildren,
+    ]}]
   });
-
-  const buffer = await Packer.toBuffer(doc);
-  const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const dateStr = meta.date ? meta.date.replace(/-/g,'') : 'CR';
-  a.href = url;
-  a.download = `CR_Chantier_N${meta.num}_${dateStr}.docx`;
-  a.click();
-  URL.revokeObjectURL(url);
+  const buffer=await Packer.toBuffer(doc);
+  const blob=new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`CR_${(c.mo||'Chantier').replace(/\s+/g,'_')}_N${m.num}_${(m.date||'').replace(/-/g,'')}.docx`;
+  a.click(); URL.revokeObjectURL(url);
   showToast('Fichier .docx téléchargé !');
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 load();
-if (!meta.date) meta.date = today();
-window.addEventListener('resize', render);
-render();
+window.addEventListener('resize', ()=>{ if(currentId) render(); });
+// Démarrage : si un seul chantier, ouvrir directement
+if(chantiers.length===1) {
+  openChantier(chantiers[0].id);
+} else {
+  showChantiers();
+}
 </script>
 </body>
 </html>
